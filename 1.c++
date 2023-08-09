@@ -1,36 +1,18 @@
 #include <iostream>
+#include <ctime>
 #include <cstdlib>
-#include <ctime>
-#include <ctime>
 using namespace std;
+// Sistema de tentativas e letra aleatoria
+char geraletraAleatoria() {
+    return 'A' + rand() %26;
+}
 
-int main () {
+int main() {
+    //Inicializador de numeros aleatorios com o tempo atual
+    srand(time(0));
 
-    srand(time(NULL));
-
-    int num1 = rand () % 60;
-    int num2 = rand () % 60;
-    int num3 = rand () % 60;
-    int num4 = rand () % 60;
-    int num5 = rand () % 60;
-    int num6 = rand () % 60;
-    int chute 
-
-    while (true) {
-        cout << "Acerte o primeiro número de 0 a 60: ";
-        cin >> chute;
-
-        if (chute > num1)
-        
-            cout << "Voce errou" << endl;
-         else if (chute < num1)
-            cout << "Voce errou" << endl;
-        else { 
-            cout << "Voce ganhou" << endl;
-            break;
-       }
-    }
-    
+    char letraAleatoria = geraletraAleatoria();
+    cout << "Letra aleatoria gerada: " << letraAleatoria << endl;
 
     return 0;
 }

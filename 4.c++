@@ -1,50 +1,36 @@
 #include <iostream>
 #include <cstdlib>
-#include <ctime> 
-
+#include <ctime>
 using namespace std;
 
-int main (){
+char geraletraAleatoria() {
+    return 'A' + rand() %26; // Gerador de letra aleatoria 
+}
 
-    srand(time(NULL));
+int main() {
+    srand(time(0));
+    // Sistema de tentativas e letra aleatoria
+    char letraSorteada = geraletraAleatoria(); 
+    int tentativas = 5;
+    char chute;
 
-    int num1 = rand() %  60;
-    int num2 = rand() %  60;
-    int tentativa;
-    int tentativa2;
-   
+    cout << "Adivinhe a letra sorteada!" << endl;
 
-    while (true) {
-        cout << "Digite o pimeiro numero: ";
-        cin >> tentativa;
-
-        if (tentativa > num1)
-            cout << "O numero é menor" << endl;
-         
-         else if (tentativa < num1)
-             cout << "O numero é maoir" << endl;
-        
-         else { 
-            cout << "Voce acertou o primeiro numero" << endl;
-            break;
-       }
+    while (tentativas > 0) {
+        cout << "Digite uma letra: "; 
+        cin >> chute;
+    
+    
+    if (chute == letraSorteada) {
+        cout << "Parabens você conseguiu!" << endl; // Informa se o usuario acertou
+        return 0;
+    } else {
+        cout << "Você errou!" << endl; // Informa se o usuario errou
+        tentativas--;
+        cout << "Tentativas restantes: " << tentativas << endl; // Quantidade de tentativas restantes
+        }
     }
-    while (true) {
-        cout << "Digite o segundo numero: ";
-        cin >> tentativa2;
-
-        if (tentativa > num2)
-            cout << "O numero é menor" << endl;
-         
-         else if (tentativa2 < num2)
-             cout << "O numero é maoir" << endl;
-        
-         else { 
-            cout << "Voce acertou o segundo numero" << endl;
-            break;
-       }
-    }
-
-
+    
+    cout << "Suas tentativas se esgotaram. A letra sorteada era: " << letraSorteada << endl; // Informa ao usuario q as tentativas se egotaram e qual era letra sorteada
     return 0;
 }

@@ -1,35 +1,25 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <cctype> // Incluindo a biblioteca que contém a função isalpha
 using namespace std;
 
+// Função para verificar se um caractere é uma letra do alfabeto
+bool verificarLetraNoAlfabeto(char letra) {
+    return isalpha(letra); // A função isalpha verifica se o caractere é uma letra
+}
 
 int main() {
-    srand(time(NULL));
+    char letraDigitada;
 
-    int num1 = rand () % 60;
-    int chute;
+    cout << "Digite uma letra:"; 
+    cin >> letraDigitada; 
 
-    // Permitir que o jogador chute a letra até acertar ou atingir o limite de tentativas
-    int tentativas = 0;
+    // Loop para verificar se a letra digitada está no alfabeto
+    while (!verificarLetraNoAlfabeto(letraDigitada)) {
+        cout << "A letra digitada não faz parte do alfabeto. Tente novamente: ";
+        cin >> letraDigitada;
+    }
 
-    do {
-        std::cout << "Tentativa " << tentativas + 1 << ": Digite um numero: ";
-        std::cin >> chute;
-       
-        if (chute == num1) {
-            std::cout << "Parabéns! Voce acertou o numero sorteado!" << std::endl;
-            break;
-        } else {
-            std::cout << "Numero incorreta. Tente novamente." << std::endl;
-        }
-       
-        tentativas++;
-    } while (tentativas < 5);
-   
-    // Informar a letra sorteada
-    std::cout << "O numero sorteado era: " << num1 << std::endl;
-    std::cout << "Voce utilizou " << tentativas + 0 << " tentativas." << std::endl;
-   
+    cout << "A letra existe no alfabeto." << endl;
+
     return 0;
 }

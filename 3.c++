@@ -1,35 +1,36 @@
 #include <iostream>
 #include <cstdlib>
-#include <ctime> 
-
+#include <ctime>
 using namespace std;
 
-int main (){
+// Função para gerar uma letra aleatória entre 'A' e 'Z'
+char geraletraAleatoria() {
+    return 'A' + rand() % 26; // Gera um número aleatório entre 0 e 25 e soma com 'A' para obter uma letra aleatória
+}
 
-    srand(time(NULL));
+int main() {
+    srand(time(0)); // Inicializa o gerador de números aleatórios com o valor do tempo atual
 
-    int num1 = rand() %  60;
-    int tentativa;
+    char letraSorteada = geraletraAleatoria(); // Gera uma letra aleatória
+    int tentativas = 5; // Define o número de tentativas
+    char chute;
 
-   
+    cout << "Adivinhe a letra sorteada!" << endl;
 
-    while (true) {
-        cout << "Digite o pimeiro numero: ";
-        cin >> tentativa;
-
-        if (tentativa > num1)
-            cout << "O numero é menor" << endl;
-         
-         else if (tentativa < num1)
-             cout << "O numero é maoir" << endl;
-        
-         else { 
-            cout << "Voce ganhou" << endl;
-            break;
-       }
+    while (tentativas > 0) {
+        cout << "Digite uma letra: ";
+        cin >> chute;
+    
+        if (chute == letraSorteada) {
+            cout << "Parabens você conseguiu!" << endl;
+            return 0;
+        } else {
+            cout << "Você errou!" << endl;
+            tentativas--;
+            cout << "Tentativas restantes: " << tentativas << endl;
+        }
     }
-
-
-
+    
+    cout << "Suas tentativas se esgotaram. A letra sorteada era: " << letraSorteada << endl;
     return 0;
 }
