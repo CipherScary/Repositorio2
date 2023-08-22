@@ -1,60 +1,90 @@
 #include <iostream>
-#include <random>
+#include <vector>
+#include <string>
+#include <cstdlib>
 #include <ctime>
+#include <algorithm>
 
-char gerarLetraAleatoria() {
-    // Vetor com as letras do alfabeto
-    char alfabeto[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60'};
-   
-    // Obter um índice aleatório
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 60);
-    int indice = dis(gen);
-   
-    // Retornar a letra correspondente ao índice
-    return alfabeto[indice];
+struct Question {
+    std::string question;
+    std::vector<std::string> options;
+    int correctOption;
+};
+
+void displayQuestion(const Question& q) {
+    std::cout << q.question << std::endl;
+    for (size_t i = 0; i < q.options.size(); ++i) {
+        std::cout << i + 1 << ". " << q.options[i] << std::endl;
+    }
+}
+
+bool checkAnswer(int playerAnswer, const Question& q) {
+    return playerAnswer == q.correctOption;
 }
 
 int main() {
-    int acertos = 0;
-    int erros = 0;
-   
-    char opcao;
-    do {
-        // Sortear uma letra aleatória
-        char letraSorteada = gerarLetraAleatoria();
-       
-        // Permitir que o jogador chute a letra até acertar ou atingir o limite de tentativas
-        int tentativas = 0;
-        char letraChute;
-        do {
-            std::cout << "Tentativa " << tentativas + 1 << ": Digite uma letra: ";
-            std::cin >> letraChute;
-           
-            if (letraChute == letraSorteada) {
-                std::cout << "Parabéns! Voce acertou a letra sorteada!" << std::endl;
-                acertos++;
-                break;
+    std::srand(std::time(nullptr));
+    std::vector<Question> questions;
+
+    // Defina as perguntas e respostas aqui...
+
+    // Resto do código...
+
+    // Definindo as cores ANSI
+    const std::string RESET = "\033[0m";
+    const std::string BOLD = "\033[1m";
+    const std::string PURPLE = "\033[0;35m";
+    const std::string GREEN = "\033[32m";
+    const std::string CYAN = "\033[1;36m";
+
+    std::random_shuffle(questions.begin(), questions.end());
+
+    std::cout << BOLD << PURPLE << "Bem-vindo ao Jogo de Perguntas e Respostas!" << RESET << std::endl;
+    std::cout << BOLD << "Por favor, insira o nome da sua equipe: " << RESET;
+    std::string teamName;
+    std::cin >> teamName;
+
+    int totalRounds = 1;
+    int totalQuestionsPerRound = 12;
+    int teamScore = 0;
+    int correctAnswers = 0;
+    int wrongAnswers = 0;
+
+    for (int round = 1; round <= totalRounds; ++round) {
+        std::cout << "-----------------------------------------" << std::endl;
+        std::cout << BOLD << "Rodada " << round << " de " << totalRounds << RESET << std::endl;
+
+        for (int questionIndex = 0; questionIndex < totalQuestionsPerRound; ++questionIndex) {
+            std::cout << "-----------------------------------------" << std::endl;
+            std::cout << BOLD << "Pergunta " << questionIndex + 1 << " de " << totalQuestionsPerRound << RESET << std::endl;
+            displayQuestion(questions[questionIndex]);
+            
+            int playerAnswer;
+            std::cout << "Insira o numero da opcao correta: ";
+            std::cin >> playerAnswer;
+
+            if (playerAnswer >= 1 && playerAnswer <= static_cast<int>(questions[questionIndex].options.size())) {
+                if (checkAnswer(playerAnswer, questions[questionIndex])) {
+                    std::cout << BOLD << GREEN << "Resposta correta!" << RESET << std::endl;
+                    teamScore++;
+                    correctAnswers++;
+                } else {
+                    std::cout << BOLD << PURPLE << "Resposta incorreta." << RESET << std::endl;
+                    wrongAnswers++;
+                }
             } else {
-                std::cout << "Letra incorreta. Tente novamente." << std::endl;
-                erros++;
+                std::cout << BOLD << "Opcao invalida! Nenhum ponto adicionado." << RESET << std::endl;
             }
-           
-            tentativas++;
-        } while (tentativas < 5);
-       
-        // Informar a letra sorteada
-        std::cout << "A letra sorteada era: " << letraSorteada << std::endl;
-       
-        // Perguntar ao jogador se ele deseja jogar novamente
-        std::cout << "Deseja jogar novamente? (S/N): ";
-        std::cin >> opcao;
-    } while (opcao == 'S' || opcao == 's');
-   
-    std::cout << "Acertos: " << acertos << std::endl;
-    std::cout << "Erros: " << erros << std::endl;
-    std::cout << "Obrigado por jogar! Ate a proxima!" << std::endl;
-   
+        }
+
+        std::cout << "-----------------------------------------" << std::endl;
+        std::cout << BOLD << "Pontuacao da equipe " << teamName << " após a rodada " << round << ": " << teamScore << " pontos." << RESET << std::endl;
+    }
+
+    std::cout << "-----------------------------------------" << std::endl;
+    std::cout << BOLD << "Fim do jogo! Pontuacao final da equipe " << teamName << ": " << teamScore << " pontos." << RESET << std::endl;
+    std::cout << BOLD << "Total de acertos: " << correctAnswers << RESET << std::endl;
+    std::cout << BOLD << "Total de erros: " << wrongAnswers << RESET << std::endl;
+
     return 0;
 }
