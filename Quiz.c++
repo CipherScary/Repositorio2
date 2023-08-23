@@ -64,6 +64,10 @@ int main() {
          {"Qual operador é usado para realizar uma comparação?",
          {"a) =", "b) +", "c) ==", "d) *"},
          3},
+         {"Qual dessas bibliotecas é usada  para cronometragem de tempo?",
+         {"a) vector", "b) ctime", "c) iostream", "d) algorithim"},
+         2},
+         
     };
 
     int choice = 0;
